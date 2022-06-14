@@ -3,15 +3,21 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using tp9;
-public class program
+using quisco;
+
+
+public class Program
 {
-   public static void Main(String[] args){
+    
+  /* public static void Main(String[] args){
        Console.WriteLine("Ingrese la direccion de la carpeta");
        String? direccion = Console.ReadLine();
        direccion = @""+ direccion;
+        
 
        string NombreArchivo = direccion + "\\index.csv";
        string NombreArchivoJson = direccion + "\\index.json";
+        List<archivo> archivos = new List<archivo>();
 
        if(!File.Exists(NombreArchivo)){
            File.Create(NombreArchivo);
@@ -45,9 +51,12 @@ public class program
                 archivoJson.nombre = nombre[0];
                 archivoJson.contador = contador;
                 archivoJson.extencion = nombre[1];
-                json =  JsonSerializer.Serialize(archivoJson);
-                streamWriterJson.WriteLine(json);
+                archivos.Add(archivoJson);
+                Console.WriteLine(archivoJson);
+                
             }
+            json =  JsonSerializer.Serialize(archivos);
+            streamWriterJson.WriteLine(json);
             foreach (string elementos in ListadoElementos)
             {
                 Console.WriteLine(elementos);
@@ -58,11 +67,16 @@ public class program
                 archivoJson.nombre = nombre[0];
                 archivoJson.contador = contador;
                 archivoJson.extencion = nombre[1];
-                json =  JsonSerializer.Serialize(archivoJson);                Console.WriteLine(json);
-                streamWriterJson.WriteLine(json);
+                archivos.Add(archivoJson);
+                
+                Console.WriteLine(json);
+                
                 
             }
+            json =  JsonSerializer.Serialize(archivos);
+            streamWriterJson.WriteLine(json);
         }
+
         streamWriterJson.Close();
         filestreamJson.Close();
         streamWriter.Close();
@@ -79,6 +93,66 @@ public class program
     }
 
 
-    }
+    }*/
 
+ 
+ //el anteriror puede tener errores, usar este jeje
+    public static string[] cosas = {"papas","chicles","bebes","negrs"};
+    public static string[] tamanio = {"pequenio","mediano","grande"};
+    public static void Main(String[] args){
+        int N = 9;
+        List<Producto> ListadoProducto = new List<Producto>();
+        string NombreArchivoJson = @"C:\Users\Alumno\Documents\prueva\index.json";
+
+        if (!File.Exists(NombreArchivoJson))
+        {
+            
+            File.Create(NombreArchivoJson);
+            
+        }
+        string json;
+        
+
+        FileStream filestreamJson = new FileStream(NombreArchivoJson, FileMode.Open);
+        StreamWriter streamWriterJson = new StreamWriter(filestreamJson);
+
+        Producto producto = new Producto();
+        Random rand = new Random();
+        for (int i = 0; i < N; i++)
+        {
+            producto.nombre = cosas[rand.Next(cosas.Length)];
+            producto.tamanio = tamanio[rand.Next(tamanio.Length)];
+            producto.precio = rand.Next(1000,5000);
+            DateTime fecha = new DateTime(rand.Next(2022,2033),rand.Next(1,13),rand.Next(1,28));
+            producto.fechavencimiento = fecha;
+            ListadoProducto.Add(producto);
+        }
+        json =  JsonSerializer.Serialize(ListadoProducto);
+            
+        streamWriterJson.WriteLine(json);
+
+        streamWriterJson.Close();
+        filestreamJson.Close();
+
+            StreamReader sr = new StreamReader(@"C:\Users\Alumno\Documents\prueva\index.json");
+            string datoJson = sr.ReadLine();
+            Console.WriteLine(datoJson);
+            var elementos = JsonSerializer.Deserialize<List<Producto>>(datoJson);
+
+            foreach (var item in elementos)
+            {
+                item.mostrar();
+            }
+
+
+            sr.Close();
+
+
+
+
+
+
+
+    }
+}
 
