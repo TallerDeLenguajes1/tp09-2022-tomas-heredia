@@ -102,7 +102,7 @@ public class Program
     public static void Main(String[] args){
         int N = 9;
         List<Producto> ListadoProducto = new List<Producto>();
-        string NombreArchivoJson = @"C:\Users\Alumno\Documents\prueva\index.json";
+        string NombreArchivoJson = @"C:\Users\usuario\Documents\1er2022\taller1\ganadores\index.json";
 
         if (!File.Exists(NombreArchivoJson))
         {
@@ -134,9 +134,9 @@ public class Program
         streamWriterJson.Close();
         filestreamJson.Close();
 
-            StreamReader sr = new StreamReader(@"C:\Users\Alumno\Documents\prueva\index.json");
+            StreamReader sr = new StreamReader(@"C:\Users\usuario\Documents\1er2022\taller1\ganadores\index.json");
             string datoJson = sr.ReadLine();
-            Console.WriteLine(datoJson);
+            
             var elementos = JsonSerializer.Deserialize<List<Producto>>(datoJson);
 
             foreach (var item in elementos)
